@@ -4,6 +4,44 @@ const fs = require('fs/promises');
 const { Task, User } = require('../../db/models');
 const { verifyAccessToken } = require('../middlewares/verifyTokens');
 
+taskRouter.route('/').get(async (req, res) => {
+  try {
+    const posts = await Task.findAll();
+    res.json(posts);
+  } catch (err) {
+    res.status(500).send(err.message); // гет запрос для неавторизированного пользователя
+  }
+});
+
+
+ taskRouter.route('/')
+  .post(async (req, res) => {
+    try {
+      const { name, description, userId, status, deadlines, image } = req.body;
+      // Создание нового задания
+      const post = await Task.create({
+        name: name, 
+        description: description,
+        userId: userId, // Пользователь ID теперь берется из тела запроса
+        status: status,
+        deadlines: deadlines,
+        image: image,
+      });
+      // Поиск снова для получения сопутствующих данных о пользователе
+      const plainX = await Task.findOne({
+        where: { id: post.id },
+        include: {
+          model: User,
+          attributes: ['id', 'name', 'email'],
+        },
+      });
+      res.json(plainX);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
+    }
+  }); 
+
 
   taskRouter.route('/filter').get(async (req, res) => {
   try {
@@ -95,7 +133,7 @@ taskRouter.route('/:id').delete(verifyAccessToken, async (req, res) => {
   }
 });
 
-taskRouter.route('/:id').put(verifyAccessToken, async (req, res) => {
+taskRouter.route('/:id').patch(verifyAccessToken, async (req, res) => {
   const { id } = req.params;
   const { name, description, deadlines, status, image } = req.body;
 

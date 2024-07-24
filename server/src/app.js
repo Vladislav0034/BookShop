@@ -11,7 +11,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/api/', taskRouter);
+app.use('/api/api', taskRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/tokens', tokenRouter);
 
