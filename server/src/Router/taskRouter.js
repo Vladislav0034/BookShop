@@ -40,7 +40,58 @@ taskRouter.route('/').get(async (req, res) => {
       console.error(err);
       res.status(500).send('Internal server error');
     }
-  }); 
+  }); //добавление задачи для не авторизированного пользователя
+
+
+taskRouter.route('/:id').delete(async (req, res) => {
+  const { id } = req.params;
+  if (Number.isNaN(+id)) {
+    return res.status(400).json({ message: 'Id must be a number' });
+  }
+
+  try {
+    const task = await Task.findByPk(id);
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    await task.destroy();
+    res.json({ message: 'Task deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}); //удаление для неавторизированного пользователя
+
+
+taskRouter.route('/:id').patch(async (req, res) => {
+  const { id } = req.params;
+  const { name, description, deadlines, status, image } = req.body;
+
+  if (Number.isNaN(+id)) {
+    return res.status(400).json({ message: 'Id must be a number' });
+  }
+
+  try {
+    const task = await Task.findByPk(id);
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    // Обновление записи с новыми данными
+    task.name = name ?? task.name;
+    task.description = description ?? task.description;
+    task.deadlines = deadlines ?? task.deadlines;
+    task.status = status ?? task.status;
+    task.image = image ?? task.image;
+
+    await task.save();
+
+    res.json(task);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}); //редактирование для неавторизированного пользователя
 
 
   taskRouter.route('/filter').get(async (req, res) => {
@@ -63,7 +114,7 @@ taskRouter.route('/').get(async (req, res) => {
   } catch (err) {
     res.status(500).send(err.message); // выводит подрробно конкретный маршрут
   }
-});
+}); //подробно показывает задачу но пока нет модалки
 
 taskRouter
   .route('/')

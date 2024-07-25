@@ -43,27 +43,22 @@ import {
     };
   
     return (
-      <Card maxW="sm">
+      <Card maxW="sm" backgroundColor="rgba(212, 207, 207, 0.5)">
         <CardBody>
           <Stack mt="6" spacing="3">
+          <Image src={task.image} alt="Todo Image" 
+          objectFit="cover"
+          height="200px"
+          width="100%"
+          borderTopLeftRadius="lg"
+          borderTopRightRadius="lg" />
             <Heading size="md">{task.name}</Heading>
             <Text>{task.deadlines}</Text>
             <Text>{task.status}</Text>
-            <Image src={task.image} alt="Todo Image" objectFit="cover" boxSize="150px" />
             <Text color="blue.600" fontSize="2xl">
               {task.description} 
             </Text>
           </Stack>
-        
-          <ButtonGroup>
-            <Button colorScheme="teal" onClick={onOpen}>
-              Редактировать
-            </Button>
-            <Button colorScheme="red" onClick={() => deleteHandler(task.id)}>
-              Удалить
-            </Button>
-          </ButtonGroup>
-        
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -89,7 +84,7 @@ import {
                   <Input
                     value={editDescription.toString()}
                     onChange={(e) => setEditDescription(e.target.value)}
-                    placeholder="Редактировать статус"
+                    placeholder="Редактировать описание задачи"
                   />
                   <Input
                     value={editDeadlines.toString()}
@@ -112,11 +107,11 @@ import {
         <Divider />
         <CardFooter>
           <ButtonGroup spacing="2">
-            <Button onClick={() => deleteHandler(task.id)} variant="outline" colorScheme="blue">
-              Удалить
-            </Button>
-            <Button onClick={onOpen} variant="outline" colorScheme="yellow">
+          <Button onClick={onOpen} variant="outline" colorScheme="gray">
               Редактировать
+            </Button>
+            <Button onClick={() => deleteHandler(task.id)} variant="outline" colorScheme="red">
+              Удалить
             </Button>
           </ButtonGroup>
         </CardFooter>

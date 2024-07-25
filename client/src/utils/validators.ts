@@ -1,9 +1,9 @@
-import { z } from 'zod';
+import {  z } from 'zod';
 
 export const TaskSchema = z.object({
     id: z.number(),
     name: z.string(),
-    userId: z.number(),
+    userId: z.number().nullable().optional(),
     description: z.string(),
     deadlines: z.string(),
     image: z.string(),
