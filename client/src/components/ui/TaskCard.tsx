@@ -55,7 +55,7 @@ import {
             <Heading size="md">{task.name}</Heading>
             <Text>{task.deadlines}</Text>
             <Text>{task.status}</Text>
-            <Text color="blue.600" fontSize="2xl">
+            <Text color="black" fontSize="1xl">
               {task.description} 
             </Text>
           </Stack>
@@ -110,7 +110,7 @@ import {
           <Button onClick={onOpen} variant="outline" colorScheme="gray">
               Редактировать
             </Button>
-            <Button onClick={() => deleteHandler(task.id)} variant="outline" colorScheme="red">
+            <Button onClick={() => deleteHandler(task.id)} variant="outline" colorScheme="gray">
               Удалить
             </Button>
           </ButtonGroup>

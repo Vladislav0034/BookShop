@@ -5,6 +5,7 @@ import TaskService from "../../services/TaskService";
 import type { EditTaskType, TaskDataType, TaskType} from "../../types/TaskTypes";
 // eslint-disable-next-line import/no-duplicates
 import { type ApiResponce } from "../../types/TaskTypes";
+import { setToast } from "../toast/toastSlice";
 
 
 // eslint-disable-next-line import/prefer-default-export
@@ -17,15 +18,17 @@ export const getTasksThunk = createAsyncThunk<ApiResponce>(
 
 
 export const createTaskThunk = createAsyncThunk<TaskType, TaskDataType>('tasks/create',
-    async (data) => {
+    async (data, thunkApi) => {
     const task = await TaskService.addTask(data);
+    thunkApi.dispatch(setToast({title: 'Task created', status: 'success'}));
     return task;
     });
     
 
 export const deleteTaskThunk = createAsyncThunk<TaskType['id'], TaskType['id']>('tasks/delete',
-    async (id) => {
+    async (id, thunkApi) => {
         await TaskService.deleteTask(id);
+        thunkApi.dispatch(setToast({title: 'Task deleted', status: 'warning'}));
         return id;
 });
 

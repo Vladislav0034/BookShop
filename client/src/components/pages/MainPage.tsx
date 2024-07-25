@@ -3,6 +3,7 @@ import { SimpleGrid } from '@chakra-ui/react';
 import TaskCard from '../ui/TaskCard';
 import TaskForm from '../ui/TaskForm';
 import useTasks from '../../hooks/useTasks';
+import TostPart from '../ui/TostPart';
 
 
 
@@ -16,6 +17,7 @@ export default function MainPage():JSX.Element {
       {tasks.map((el) => (<TaskCard task={el} key={el.id} deleteHandler={deleteHandler}
       editHandler={editHandler}/>))}
     </SimpleGrid>
+    <TostPart/>
     </>
   )
 }

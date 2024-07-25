@@ -1,21 +1,20 @@
 const authRouter = require('express').Router();
-
 const bcrypt = require('bcrypt');
 const { User } = require('../../db/models');
 const generateTokens = require('../utils/generateTokens');
 const cookieConfig = require('../configs/cookie.config');
 
 authRouter.post('/signup', async (req, res) => {
-  const { email, name, password } = req.body;
+  const { email, username, password } = req.body;
 
-  if (!email || !name || !password) {
+  if (!email || !username || !password) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
   try {
     const [user, created] = await User.findOrCreate({
       where: { email },
-      defaults: { name, password: await bcrypt.hash(password, 10) },
+      defaults: { username, password: await bcrypt.hash(password, 10) },
     });
     if (!created) {
       return res.status(400).json({ error: 'User already exists' });

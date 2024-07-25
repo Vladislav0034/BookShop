@@ -14,7 +14,7 @@ taskRouter.route('/').get(async (req, res) => {
 });
 
 
- taskRouter.route('/')
+ /* taskRouter.route('/')
   .post(async (req, res) => {
     try {
       const { name, description, userId, status, deadlines, image } = req.body;
@@ -91,10 +91,10 @@ taskRouter.route('/:id').patch(async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
-}); //редактирование для неавторизированного пользователя
+}); //редактирование для неавторизированного пользователя */
 
 
-  taskRouter.route('/filter').get(async (req, res) => {
+  /* taskRouter.route('/filter').get(async (req, res) => {
   try {
     const xs = await Task.findAll();
     res.json(xs);
@@ -114,7 +114,7 @@ taskRouter.route('/:id').patch(async (req, res) => {
   } catch (err) {
     res.status(500).send(err.message); // выводит подрробно конкретный маршрут
   }
-}); //подробно показывает задачу но пока нет модалки
+}); //подробно показывает задачу но пока нет модалки */
 
 taskRouter
   .route('/')

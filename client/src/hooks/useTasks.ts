@@ -20,7 +20,9 @@ export default function useTasks(): {
   const TasksSubmitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as TaskType;
+    if(!data.name || !data.description || !data.deadlines) return; //проверка на пустые поля
     void dispatch(createTaskThunk(data));
+    
   };
 
   const deleteHandler = (id: TaskType['id']): void => {

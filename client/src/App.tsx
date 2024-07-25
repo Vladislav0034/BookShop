@@ -6,6 +6,8 @@ import {
 import MainPage from './components/pages/MainPage';
 import FilterPage from './components/pages/FilterPage';
 import Layout from './components/Layout';
+import SignInPage from './components/pages/SignInPage';
+import SignUpPage from './components/pages/SignUpPage';
 
 
 function App(): JSX.Element {
@@ -22,6 +24,14 @@ function App(): JSX.Element {
         {
           path: '/filter',
           element: <FilterPage/>,
+        },
+        {
+          path: '/signin',
+          element: <SignInPage />,
+        },
+        {
+          path: 'signup',
+          element: <SignUpPage />,
         },
       ]
     },
